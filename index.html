@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm to kitchen</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<style>
+    .cart img {
+        cursor: pointer;
+    }
+
+    .modal {
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(13, 9, 9, 0.1);
+    }
+
+    .item {
+        /* border-top: 0.2px solid grey; */
+        border-bottom: 0.1px solid grey;
+        padding: 0.3rem;
+        display: grid;
+        grid-template-columns: 3fr 1fr 1fr;
+        gap: auto;
+    }
+
+    .quantity,
+    .price {
+        text-align: center;
+        justify-content: center;
+    }
+
+    .empty-cart {
+        /* min-height: 20vh; */
+        padding: 3rem 1rem;
+        margin: 1rem;
+        color: blue;
+        font-style: italic;
+        background-color: rgb(213, 212, 211);
+        justify-content: center;
+        text-align: center;
+        border-radius: 15px;
+    }
+</style>
+
+<body>
+
+    <nav class="navbar bg-body-tertiary flex fixed-top" id="home">
+        <div class="heading">
+            <img src="https://cdn-icons-png.flaticon.com/128/3514/3514211.png" alt="">
+            <div style="margin: auto;"><b>Farm2Kitchen</b></div>
+        </div>
+
+        <div class="navmenu flex-row">
+            <div>
+                <a href="#carouselExampleAutoplaying">Home</a>
+            </div>
+            <div>
+                <a href="#shop">Shop</a>
+            </div>
+        </div>
+
+        <div class="cart">
+            <img src="https://cdn-icons-png.flaticon.com/512/2331/2331970.png" onclick="openCart()" alt="cart"></img>
+        </div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" id="cartButton" style="display:none" data-bs-toggle="modal"
+            data-bs-target="#cartModal">
+            open Cart
+        </button>
+    </nav>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Your Cart Items</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="item" style="color: rgb(245, 27, 111);">
+                        <div class="name">Items</div>
+                        <div class="quantity">Qty(KG)</div>
+                        <div class="price">Price(₹)</div>
+                    </div>
+                    <div class="cart-items" id="cartItems">
+
+                    </div>
+                    <div class="item">
+                        <div class="name" style="color: rgb(245, 27, 111);">Total Price</div>
+                        <div class="quantity" style="color: rgb(14, 142, 4);"> ₹ </div>
+                        <div class="price" id="totalPriceOfCart" style="color: rgb(121, 27, 245);">999</div>
+                    </div>
+                </div>
+                <div class=" modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Add items</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="placeOrder()">Place Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://2.bp.blogspot.com/-eLx5DsaQBUw/V7-t4bKYXrI/AAAAAAAAAAk/C4EJf_8AX4I3ueWynepFeuq1DK8FCm-OACLcB/s1600/veg1.jpg"
+                    class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="https://img.freepik.com/premium-photo/indian-farmer-working-green-pigeon-peas-field-with-bullock_54391-6543.jpg?size=626&ext=jpg"
+                    class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="https://img.freepik.com/free-photo/woman-cooking-kitchen_1303-12912.jpg" class="d-block w-100"
+                    alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div class="topic">
+        <h1>Shop Fresh Vegetables</h1>
+    </div>
+    <div class="shop" id="shop">
+        <div class="card d-flex">
+            <div class="product-image d-flex">
+                <img src="./images/BRINJAL (2).jpeg" alt="">
+            </div>
+
+            <div class="product-description d-flex">
+                <div class="product-name">Brinjal</div>
+                <div class="product-price">₹50/kg</div>
+            </div>
+
+            <div class="add-to-card">
+                <button type="reset" class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card d-flex">
+            <div class="product-image d-flex">
+                <img src="./images/Beetroot.webp" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Beetroot</div>
+                <div class="product-price">₹60/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card d-flex">
+            <div class="product-image d-flex">
+                <img src="./images/BRINJAL.jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Brinjal</div>
+                <div class="product-price">₹30/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card d-flex">
+            <div class="product-image d-flex">
+                <img src="./images/CARROT (2).jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Carrot</div>
+                <div class="product-price">₹70/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card d-flex">
+            <div class="product-image d-flex">
+                <img src="./images/CARROT.jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Carrot</div>
+                <div class="product-price">₹65/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/Chakhwat.jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Chakhwat</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/chane ki bhaji.jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Chane ki bhaji</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/DODKA TORAI.jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Dodka Torai</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/DODKA.jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Dodka</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/DRUMSTICK.jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Drumstick</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/GARLIC.jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Garlic</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/GINGER.jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Ginger</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/GREEN CHILLI (2).jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Green CHilli</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/green coriander-leaves.jpg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Green Corriander</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/Green Onion.jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Green Onion</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/GREEN PEAS VATANA.jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Green Peas</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/Green-Capsicum.jpg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Green Capsicum</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/टमाटर  TAMATER.jpg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">tomato</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/KARELA.jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Karela</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/Ladies finger.jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">ladies finger</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/methi-leaves_.webp" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Methi</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/ONION.jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Onion</div>
+                <div class="product-price">₹100/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/palak  (spinach).jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Spinack(palak)</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/POTATO (2).jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Potato</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/RADISH MOOLI (2).jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">radish</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/Red Spinach leaves lal chakvat.jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Red spinach</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/Shepu Bhaji.jpg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Shepu Bhaji</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/Sweet Potato.jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Sweet Potato</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/TURMERIC.jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Turmeric</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./images/फूलगोभी CAULIFLOWER.jpg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Cauliflower</div>
+                <div class="product-price">₹20/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-body">
+                Item added to Cart.
+            </div>
+        </div>
+    </div>
+
+    <div class="about flex" id="about">
+        <h1>About Farm To Kitchen</h1>
+        <p>The concept of farm to kitchen is to bridge the gap between farmers and consumers. Our aim is to deliver the
+            farm produce to the customer as quickly as possible, fresh and at a low price. <span
+                id="dots">...</span><span id="more">You are seeing the condition of the farmers. His family depends on
+                agriculture. Today, agricultural produce has become very expensive, but it does not benefit either the
+                farmer or the consumer. We all together will buy the goods of the farmers and we all will take their
+                benefits along with the farmers. Let's help each other, let's  stick together.</span></p>
+
+        <a onclick="myFunction()" id="myBtn">Read more</a>
+    </div>
+
+    <div class="map">
+        <h2>
+            <bold>Your Location</bold>
+        </h2>
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d438216.21850869944!2d77.30450483778846!3d23.192739620815672!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1701342330271!5m2!1sen!2sin"
+            width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+    <div class="contact" id="contact">
+        <div class="contactfrm">
+            <div style="padding: 1rem 0rem;">
+                <h1>
+                    <bold>Contact Us</bold>
+                </h1>
+                <p>
+                    123, Jabalpur Engineering College, Jabalpur, 482011,
+                    India
+                </p>
+                <p>farmtoKitchen379@gmail.com</p>
+                <p>+91 84710 79104</p>
+            </div>
+            <div class="form">
+                <h2>Get in Touch</h2>
+                <form class="row g-3">
+                    <div class="col-md-6">
+                        <label for="inputFirstName" class="form-label">
+                            First Name
+                        </label>
+                        <input type="text" class="form-control fc" id="firstName"></input>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputLastName" class="form-label">
+                            Last Name
+                        </label>
+                        <input type="text" class="form-control fc" id="lastName"></input>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputEmail4" class="form-label">
+                            Email *
+                        </label>
+                        <input type="email" class="form-control fc" id="inputEmail4" required></input>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputPhone" class="form-label">
+                            Phone
+                        </label>
+                        <input type="number" class="form-control fc " id="inputPhone"></input>
+                    </div>
+                    <div class="col-md-12 message">
+                        <label for="inputMessage" class="form-label">
+                            Message
+                        </label>
+                        <input type="text" class="form-control fc" id="inputMessage" placeholder=""></input>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-success col-md-12">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div>© made by devaliyaaman</div>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <script>
+        // Enable carousel autoplay
+        $(document).ready(function () {
+            $('#carouselExampleAutoplaying').carousel({
+                interval: 2000 // Adjust the interval in milliseconds (e.g., 2000 = 2 seconds)
+            });
+        });
+
+
+    </script>
+
+</body>
+
+</html>
